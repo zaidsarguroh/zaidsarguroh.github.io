@@ -3,916 +3,410 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zaid — Mechatronics Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Zaid Sarguroh — Control Systems & Embedded Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --ink:      #0f0f0e;
-      --ink-soft: #4a4a46;
-      --ink-muted:#9a9a94;
-      --paper:    #f7f5f0;
-      --paper-2:  #eeebe3;
-      --accent:   #1a1a18;
-      --signal:   #c8401a;   /* rust-red — engineering warning tape */
-      --signal-2: #2b5fa6;   /* blueprint blue */
-      --mono:     'IBM Plex Mono', monospace;
-      --serif:    'DM Serif Display', serif;
-      --sans:     'DM Sans', sans-serif;
-      --max:      1100px;
-      --gutter:   clamp(1.5rem, 5vw, 4rem);
+      --bg:       #f6f8fa;
+      --surface:  #ffffff;
+      --border:   #d0d7de;
+      --border2:  #e8eaed;
+      --ink:      #1f2328;
+      --ink-soft: #57606a;
+      --ink-muted:#848d97;
+      --navy:     #1a1a2e;
+      --blue:     #0969da;
+      --green:    #1a7f37;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --max: 1020px;
+      --g: clamp(1rem, 4vw, 2.5rem);
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: .025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.6; }
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.1rem var(--gutter);
-      background: rgba(247,245,240,.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--paper-2);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 48px; background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--g);
     }
+    .nav-id { font-family: var(--mono); font-size: .72rem; color: #e8eaed; letter-spacing: .04em; }
+    .nav-id span { color: #58a6ff; }
+    nav ul { list-style: none; display: flex; gap: 1.4rem; }
+    nav a { font-family: var(--mono); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; color: #8b949e; text-decoration: none; transition: color .15s; }
+    nav a:hover { color: #e6edf3; }
+    .nav-badge { font-family: var(--mono); font-size: .62rem; background: #1a7f37; color: #fff; padding: .18rem .6rem; letter-spacing: .06em; }
 
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: .78rem;
-      letter-spacing: .04em;
-      color: var(--ink-soft);
-    }
-    .nav-logo span { color: var(--signal); }
+    /* ── LAYOUT ── */
+    .page { max-width: var(--max); margin: 0 auto; padding: 0 var(--g); }
+    .section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .section:last-of-type { border-bottom: none; }
 
-    nav ul {
-      list-style: none;
-      display: flex; gap: 2rem;
-    }
-    nav a {
-      font-family: var(--mono);
-      font-size: .72rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      text-decoration: none;
-      transition: color .2s;
-    }
-    nav a:hover { color: var(--ink); }
-
-    /* ── SECTIONS ── */
-    section { padding: 6rem var(--gutter); max-width: var(--max); margin: 0 auto; }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: .68rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--signal);
-      margin-bottom: 1rem;
-      display: flex; align-items: center; gap: .6rem;
-    }
-    .section-label::after {
-      content: '';
-      display: block;
-      height: 1px;
-      width: 40px;
-      background: var(--signal);
-      opacity: .5;
-    }
-
-    h2 {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--ink);
-      margin-bottom: 1rem;
-    }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding-top: 8rem;
-      padding-bottom: 5rem;
-      position: relative;
-      border-bottom: 1px solid var(--paper-2);
-    }
-
-    .hero-rule {
-      position: absolute;
-      top: 0; bottom: 0;
-      right: calc(var(--gutter) + 260px);
-      width: 1px;
-      background: var(--paper-2);
-    }
-
-    .hero-coords {
-      position: absolute;
-      top: 7.5rem; right: var(--gutter);
-      font-family: var(--mono);
-      font-size: .65rem;
-      color: var(--ink-muted);
-      text-align: right;
-      line-height: 1.9;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: .72rem;
-      letter-spacing: .1em;
-      color: var(--ink-muted);
-      margin-bottom: 1.4rem;
-      display: flex; align-items: center; gap: .6rem;
-    }
-    .hero-tag::before {
-      content: '';
-      display: block; width: 28px; height: 1px;
-      background: var(--ink-muted);
-    }
-
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(3.2rem, 8vw, 6.5rem);
-      font-weight: 400;
-      line-height: 1.0;
-      letter-spacing: -.01em;
-      color: var(--ink);
-      margin-bottom: .5rem;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--ink-soft);
-    }
-
-    .hero-sub {
-      font-family: var(--sans);
-      font-size: clamp(.95rem, 1.8vw, 1.1rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      max-width: 560px;
-      margin: 1.6rem 0 2.4rem;
-      line-height: 1.7;
-    }
-
-    .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: .5rem;
-      font-family: var(--mono);
-      font-size: .74rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: .72rem 1.4rem;
-      border: 1.5px solid var(--ink);
-      color: var(--ink);
-      background: transparent;
-      cursor: pointer;
-      transition: background .2s, color .2s;
-    }
-    .btn:hover { background: var(--ink); color: var(--paper); }
-    .btn.filled { background: var(--ink); color: var(--paper); }
-    .btn.filled:hover { background: var(--signal); border-color: var(--signal); }
-
-    .hero-status {
-      margin-top: 3.5rem;
-      display: flex; align-items: center; gap: .7rem;
-      font-family: var(--mono); font-size: .68rem; color: var(--ink-soft);
-    }
-    .status-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #3da06a;
-      box-shadow: 0 0 0 3px rgba(61,160,106,.2);
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(61,160,106,.2); }
-      50%       { box-shadow: 0 0 0 6px rgba(61,160,106,.08); }
-    }
-
-    /* ── PHOTO ── */
-    .hero-photo-wrap {
-      position: absolute;
-      bottom: 5rem; right: var(--gutter);
-      width: 200px;
-    }
-    .hero-photo-frame {
-      position: relative;
-      width: 200px; height: 240px;
-      overflow: hidden;
-    }
-    .hero-photo-frame::before {
-      content: '';
-      position: absolute; inset: 0;
-      border: 1.5px solid var(--paper-2);
-      z-index: 2; pointer-events: none;
-    }
-    .hero-photo-frame img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-      display: block;
-      filter: grayscale(15%) contrast(1.05);
-    }
-    /* Shown when no photo is uploaded — blueprint grid placeholder */
-    .photo-placeholder {
-      width: 200px; height: 240px;
-      background: var(--paper-2);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .6rem;
-      border: 1.5px dashed var(--ink-muted);
-      cursor: pointer;
-      transition: border-color .2s;
-    }
-    .photo-placeholder:hover { border-color: var(--signal); }
-    .photo-placeholder svg { opacity: .3; }
-    .photo-placeholder span {
-      font-family: var(--mono); font-size: .6rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--ink-muted); text-align: center;
-      padding: 0 1rem;
-    }
-    .photo-label {
-      margin-top: .6rem;
-      font-family: var(--mono); font-size: .6rem;
-      letter-spacing: .06em; text-transform: uppercase;
-      color: var(--ink-muted); text-align: center;
-    }
-    #photo-input { display: none; }
-
-    /* ── ABOUT ── */
-    #about { border-bottom: 1px solid var(--paper-2); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 2.5rem;
-    }
-
-    .about-text p {
-      color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 1.8;
-      margin-bottom: 1.2rem;
-      font-weight: 300;
-    }
-
-    .about-specs {
-      display: flex; flex-direction: column; gap: 0;
-    }
-    .spec-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding: .85rem 0;
-      border-bottom: 1px solid var(--paper-2);
-      gap: 1rem;
-    }
-    .spec-key {
-      font-family: var(--mono); font-size: .68rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--ink-muted);
-      flex-shrink: 0;
-    }
-    .spec-val {
-      font-size: .92rem; color: var(--ink); text-align: right;
-      font-weight: 400;
-    }
-
-    /* ── SKILLS ── */
-    #skills { border-bottom: 1px solid var(--paper-2); }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--paper-2);
-      margin-top: 2.5rem;
-      border: 1.5px solid var(--paper-2);
-    }
-
-    .skill-block {
-      background: var(--paper);
-      padding: 1.8rem;
-    }
-
-    .skill-block-label {
-      font-family: var(--mono); font-size: .65rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--signal-2); margin-bottom: 1rem;
-    }
-
-    .skill-block h3 {
-      font-family: var(--serif); font-size: 1.2rem;
-      font-weight: 400; margin-bottom: 1rem;
-    }
-
-    .skill-tags {
-      display: flex; flex-wrap: wrap; gap: .4rem;
-    }
-    .tag {
-      font-family: var(--mono); font-size: .65rem;
-      letter-spacing: .04em;
-      padding: .28rem .65rem;
-      background: var(--paper-2);
-      color: var(--ink-soft);
-      border: 1px solid transparent;
-      transition: border-color .2s, color .2s;
-    }
-    .tag:hover { border-color: var(--ink-soft); color: var(--ink); }
-
-    /* ── PROJECTS ── */
-    #projects { border-bottom: 1px solid var(--paper-2); }
-
-    .projects-list {
-      margin-top: 2.5rem;
-      display: flex; flex-direction: column; gap: 0;
-    }
-
-    .project-item {
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      gap: 2rem;
-      align-items: start;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--paper-2);
-      text-decoration: none;
-      color: inherit;
-      transition: background .15s;
-      cursor: pointer;
-    }
-    .project-item:hover { background: rgba(0,0,0,.015); }
-    .project-item:first-child { border-top: 1px solid var(--paper-2); }
-
-    .project-num {
-      font-family: var(--mono); font-size: .68rem;
-      color: var(--ink-muted); letter-spacing: .06em;
-      padding-top: .2rem;
-    }
-
-    .project-body h3 {
-      font-family: var(--serif); font-size: 1.35rem;
-      font-weight: 400; margin-bottom: .4rem;
-      transition: color .2s;
-    }
-    .project-item:hover .project-body h3 { color: var(--signal); }
-
-    .project-body p {
-      font-size: .9rem; color: var(--ink-soft);
-      font-weight: 300; line-height: 1.6;
-      max-width: 520px; margin-bottom: .8rem;
-    }
-
-    .project-tech {
-      display: flex; gap: .35rem; flex-wrap: wrap;
-    }
-    .project-tech span {
-      font-family: var(--mono); font-size: .6rem;
-      letter-spacing: .05em; text-transform: uppercase;
-      padding: .2rem .55rem;
-      border: 1px solid var(--paper-2);
-      color: var(--ink-muted);
-    }
-
-    .project-arrow {
-      font-size: 1.2rem; color: var(--ink-muted);
-      padding-top: .15rem;
-      transition: transform .2s, color .2s;
-    }
-    .project-item:hover .project-arrow { transform: translate(3px, -3px); color: var(--signal); }
-
-    /* ── EXPERIENCE ── */
-    #experience { border-bottom: 1px solid var(--paper-2); }
-
-    .exp-list {
-      margin-top: 2.5rem;
-      display: flex; flex-direction: column; gap: 2.5rem;
-    }
-
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-    }
-
-    .exp-meta {
-      font-family: var(--mono); font-size: .68rem;
-      letter-spacing: .04em; color: var(--ink-muted);
-      line-height: 1.8;
-    }
-    .exp-meta strong {
-      display: block; color: var(--ink-soft); margin-bottom: .3rem;
-      font-weight: 500;
-    }
-
-    .exp-content h3 {
-      font-family: var(--serif); font-size: 1.3rem;
-      font-weight: 400; margin-bottom: .2rem;
-    }
-    .exp-content .exp-org {
-      font-family: var(--mono); font-size: .72rem;
-      letter-spacing: .06em; text-transform: uppercase;
-      color: var(--signal-2); margin-bottom: .8rem;
-    }
-    .exp-content p {
-      font-size: .9rem; color: var(--ink-soft);
-      font-weight: 300; line-height: 1.7; margin-bottom: .5rem;
-    }
-    .exp-content ul {
-      padding-left: 1.1rem; margin-top: .4rem;
-    }
-    .exp-content li {
-      font-size: .88rem; color: var(--ink-soft);
-      font-weight: 300; line-height: 1.65;
-      margin-bottom: .3rem;
-    }
-
-    /* ── EDUCATION ── */
-    #education { border-bottom: 1px solid var(--paper-2); }
-
-    .edu-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.5px; background: var(--paper-2);
-      margin-top: 2.5rem; border: 1.5px solid var(--paper-2);
-    }
-    .edu-card {
-      background: var(--paper); padding: 2rem;
-    }
-    .edu-card .degree {
-      font-family: var(--serif); font-size: 1.3rem;
-      font-weight: 400; margin-bottom: .3rem;
-    }
-    .edu-card .school {
-      font-family: var(--mono); font-size: .7rem;
-      letter-spacing: .07em; text-transform: uppercase;
-      color: var(--signal-2); margin-bottom: .7rem;
-    }
-    .edu-card .years {
-      font-family: var(--mono); font-size: .66rem;
-      color: var(--ink-muted); margin-bottom: 1rem;
-    }
-    .edu-card p {
-      font-size: .87rem; color: var(--ink-soft);
-      font-weight: 300; line-height: 1.65;
-    }
-    .edu-courses {
-      margin-top: .8rem;
-      display: flex; flex-wrap: wrap; gap: .35rem;
-    }
-    .course-tag {
-      font-family: var(--mono); font-size: .6rem;
-      letter-spacing: .04em; padding: .22rem .55rem;
-      background: var(--paper-2); color: var(--ink-soft);
-    }
-
-    /* ── CONTACT ── */
-    #contact {
-      border-bottom: none;
-      text-align: center;
-      padding-bottom: 8rem;
-    }
-    .contact-inner { max-width: 600px; margin: 0 auto; }
-    #contact h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
-    #contact p {
-      color: var(--ink-soft); font-weight: 300;
-      font-size: 1rem; line-height: 1.75;
-      margin-bottom: 2.5rem;
-    }
-    .contact-links {
-      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 1.5rem var(--gutter);
-      border-top: 1px solid var(--paper-2);
-      display: flex; justify-content: space-between; align-items: center;
+    /* ── SPECSHEET HERO ── */
+    #hero { padding-top: 48px; }
+    .spec-header {
+      background: var(--navy); color: #e6edf3;
+      padding: 2rem var(--g) 1.6rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
       flex-wrap: wrap; gap: 1rem;
     }
-    footer span {
-      font-family: var(--mono); font-size: .65rem;
-      letter-spacing: .06em; color: var(--ink-muted);
+    .spec-header-left h1 {
+      font-family: var(--mono); font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 500; letter-spacing: -.01em; color: #e6edf3; margin-bottom: .3rem;
     }
+    .spec-header-left .subtitle { font-size: .82rem; color: #8b949e; font-family: var(--mono); letter-spacing: .04em; }
+    .spec-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .available-badge { background: #1a7f37; color: #fff; font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; padding: .25rem .8rem; }
+    .spec-header-right .loc { font-family: var(--mono); font-size: .65rem; color: #8b949e; }
 
-    /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .6s ease, transform .6s ease;
+    /* SPEC GRID */
+    .spec-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid var(--border);
+      background: var(--surface);
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .spec-cell {
+      padding: .9rem 1.1rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .spec-cell.wide { grid-column: span 2; }
+    .spec-cell.full { grid-column: span 4; }
+    .sc-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: .35rem; }
+    .sc-val { font-family: var(--mono); font-size: .8rem; color: var(--ink); font-weight: 500; }
+    .sc-val.soft { font-weight: 400; color: var(--ink-soft); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .stag { font-family: var(--mono); font-size: .62rem; padding: .18rem .55rem; border: 1px solid var(--border); color: var(--ink-soft); background: var(--bg); }
+    .stag.hi { border-color: #0969da55; color: var(--blue); background: #0969da0d; }
+
+    /* ── README SECTION CHROME ── */
+    .readme-chrome {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden; margin-top: .5rem;
+    }
+    .readme-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: .55rem 1rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .readme-bar .dots { display: flex; gap: 5px; }
+    .readme-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .readme-bar .fname { font-family: var(--mono); font-size: .68rem; color: var(--ink-muted); margin-left: .4rem; }
+    .readme-body { padding: 1.4rem 1.6rem; }
+
+    /* README typography */
+    .rm-h1 { font-size: 1.4rem; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border); padding-bottom: .5rem; margin-bottom: .9rem; }
+    .rm-h2 { font-size: 1rem; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border2); padding-bottom: .3rem; margin: 1.4rem 0 .7rem; }
+    .rm-h3 { font-size: .88rem; font-weight: 600; color: var(--ink); margin: 1rem 0 .4rem; }
+    .rm-p { font-size: .86rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: .7rem; }
+    .rm-p code, code { font-family: var(--mono); font-size: .78rem; background: #afb8c133; padding: .1rem .35rem; border-radius: 3px; color: var(--ink); }
+    .badges { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .9rem; }
+    .badge { font-family: var(--mono); font-size: .65rem; padding: .2rem .65rem; border-radius: 2px; font-weight: 500; }
+    .badge.blue { background: #0969da1a; color: #0969da; }
+    .badge.green { background: #1a7f371a; color: #1a7f37; }
+    .badge.gray { background: var(--bg); color: var(--ink-soft); border: 1px solid var(--border); }
+    .badge.orange { background: #bc4c001a; color: #bc4c00; }
+
+    /* README table */
+    .rm-table { width: 100%; border-collapse: collapse; font-size: .83rem; margin-bottom: .5rem; }
+    .rm-table th { background: var(--bg); font-weight: 600; text-align: left; padding: .5rem .75rem; border: 1px solid var(--border); color: var(--ink); font-size: .78rem; }
+    .rm-table td { padding: .48rem .75rem; border: 1px solid var(--border); color: var(--ink-soft); vertical-align: top; }
+    .rm-table td:first-child { font-weight: 500; color: var(--ink); white-space: nowrap; background: var(--bg); font-family: var(--mono); font-size: .75rem; }
+    .rm-table td code { font-size: .72rem; }
+
+    /* PWR blocks (Problem / Approach / Result) */
+    .pwr { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: .7rem 0; }
+    .pwr-block { padding: .75rem .9rem; border-right: 1px solid var(--border); }
+    .pwr-block:last-child { border-right: none; }
+    .pwr-label { font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; font-weight: 500; }
+    .pwr-label.p { color: #bc4c00; }
+    .pwr-label.a { color: #0969da; }
+    .pwr-label.r { color: #1a7f37; }
+    .pwr-text { font-size: .8rem; color: var(--ink-soft); line-height: 1.6; }
+    .pwr-text b { color: var(--ink); font-weight: 500; }
+
+    /* README blockquote */
+    .rm-quote { border-left: 3px solid var(--border); padding: .5rem 1rem; margin: .8rem 0; color: var(--ink-soft); font-size: .85rem; font-style: italic; }
+
+    /* Inline project link row */
+    .proj-link-row { display: flex; justify-content: flex-end; margin-top: .4rem; }
+    .proj-link { font-family: var(--mono); font-size: .68rem; color: var(--blue); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; }
+    .proj-link:hover { border-color: var(--blue); }
+
+    /* Skills table rows */
+    .skill-section { margin-bottom: .3rem; }
+
+    /* Contact section */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .8rem; }
+    .contact-btn {
+      display: block; text-align: center; text-decoration: none;
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .06em;
+      padding: .7rem 1rem; border: 1px solid var(--border);
+      color: var(--ink); background: var(--surface);
+      transition: background .15s, border-color .15s;
+    }
+    .contact-btn:hover { background: var(--bg); border-color: var(--ink-soft); }
+    .contact-btn.primary { background: var(--navy); color: #e6edf3; border-color: var(--navy); }
+    .contact-btn.primary:hover { background: #0d1117; }
+    .contact-btn.dl { background: #1a7f37; color: #fff; border-color: #1a7f37; }
+    .contact-btn.dl:hover { background: #116329; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); padding: 1rem var(--g); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .8rem; }
+    footer span { font-family: var(--mono); font-size: .62rem; color: #8b949e; }
+    footer span b { color: #e6edf3; font-weight: 400; }
+
+    /* ── FADE IN ── */
+    .fade { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .fade.in { opacity: 1; transform: none; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .about-grid, .skills-grid, .edu-grid { grid-template-columns: 1fr; }
-      .exp-item { grid-template-columns: 1fr; gap: .5rem; }
-      .project-item { grid-template-columns: 50px 1fr auto; gap: 1rem; }
-      nav ul { gap: 1.2rem; }
-      .hero-coords { display: none; }
-      .hero-rule { display: none; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .hero-photo-wrap { display: none; }
+    @media (max-width: 760px) {
+      .spec-grid { grid-template-columns: 1fr 1fr; }
+      .spec-cell.full { grid-column: span 2; }
+      .spec-cell.wide { grid-column: span 2; }
+      nav ul { display: none; }
+      .pwr { grid-template-columns: 1fr; }
+      .pwr-block { border-right: none; border-bottom: 1px solid var(--border); }
+      .pwr-block:last-child { border-bottom: none; }
+      .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">Zaid Sarguroh</div>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <div class="nav-id">zaidsarguroh<span>_</span></div>
+  <ul>
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <div class="nav-badge">Available</div>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero" style="max-width:100%; padding-left: var(--gutter); padding-right: var(--gutter);">
-    <div class="hero-rule"></div>
-    <div class="hero-coords">
-      Rosenheim, Germany<br>
-      — —<br>
-      M.Eng. Engineering Sciences<br>
-      Speicalisation: Mechatronics
+<!-- HERO — specsheet style -->
+<div id="hero">
+  <div class="spec-header">
+    <div class="spec-header-left">
+      <h1>Zaid Sarguroh</h1>
+      <div class="subtitle">Control Systems &amp; Embedded Engineer</div>
     </div>
+    <div class="spec-header-right">
+      <div class="available-badge">Open to Werkstudent</div>
+      <div class="loc">Rosenheim, Bavaria, DE</div>
+      <div class="loc">EN: C1 &nbsp;·&nbsp; DE: A2</div>
+    </div>
+  </div>
 
-    <div class="hero-tag">MEng Engineering Sciences at TH Rosenheim</div>
-    <h1>Zaid<br><em>L. Sarguroh</em></h1>
-    <p class="hero-sub">
-      Building intelligent control systems and embedded software
-      for the next generation of autonomous and electrified vehicles.
-    </p>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn filled">View Projects</a>
-      <a href="#contact" class="btn">Get in Touch</a>
-      <a href="https://github.com/your-username" target="_blank" class="btn">GitHub ↗</a>
-    </div>
-    <div class="hero-status">
-      <span class="status-dot"></span>
-      Open to Werkstudent roles&amp; - Munich area
-    </div>
+  <div class="spec-grid">
+    <div class="spec-cell"><div class="sc-label">Degree (current)</div><div class="sc-val">M.Eng. Engineering Sciences (Mechatronics)</div><div class="sc-val soft">TH Rosenheim · 2025–present</div></div>
+    <div class="spec-cell"><div class="sc-label">Degree (prior)</div><div class="sc-val">B.Tech. Mechanical Engineering</div><div class="sc-val soft">NIT Rourkela · 2017–2021</div></div>
+    <div class="spec-cell"><div class="sc-label">Industry exp.</div><div class="sc-val">2+ years ECU ASW</div><div class="sc-val soft">Devise Electronics · Pune, IN</div></div>
+    <div class="spec-cell"><div class="sc-label">Target roles</div><div class="sc-val">Werkstudent</div><div class="sc-val soft">Controls · Robotics · Embedded</div></div>
+    <div class="spec-cell wide"><div class="sc-label">Control stack</div><div class="tag-row" style="margin-top:.3rem"><span class="stag hi">MPC</span><span class="stag hi">EKF</span><span class="stag hi">LQR/LQG</span><span class="stag hi">State-space</span><span class="stag hi">System ID</span><span class="stag hi">Robust control</span><span class="stag hi">PID</span></div></div>
+    <div class="spec-cell wide"><div class="sc-label">Embedded stack</div><div class="tag-row" style="margin-top:.3rem"></span><span class="stag hi">C<span class="stag hi">STM32/ARM</span><span class="stag hi">FreeRTOS</span><span class="stag hi">CAN/J1939</span><span class="stag hi">Bare-Metal</span><span class="stag hi">SPI/UART/I2C</span></div></div>
+  </div>
+</div>
 
-    <!-- PHOTO -->
-    <input type="file" id="photo-input" accept="image/*" />
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-frame" id="photo-frame" style="display:none;">
-        <img id="hero-img" src="" alt="Zaid Mohiuddin" />
+<!-- ABOUT — README style -->
+<div class="page">
+
+  <div class="section fade" id="about">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">README.md</div>
       </div>
-      <div class="photo-placeholder" id="photo-placeholder" onclick="document.getElementById('photo-input').click()">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="1"/>
-          <circle cx="8.5" cy="8.5" r="1.5"/>
-          <polyline points="21 15 16 10 5 21"/>
-        </svg>
-        <span>Click to add your photo</span>
-      </div>
-      <div class="photo-label" id="photo-label">photo.jpg</div>
-    </div>
-
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-label">01 / About</div>
-    <h2>Engineer at the intersection of<br><em>control theory &amp; embedded systems</em></h2>
-    <div class="about-grid fade-up">
-      <div class="about-text">
-        <p>
-          I'm a Master's student in Engineering Sciences at TH Rosenheim with a background
-          in Mechanical Engineering and hands-on industry experience in embedded systems
-          and model-based development for automotive EV control systems.
-        </p>
-        <p>
-          My focus is on state estimation, model predictive control, and real-time
-          embedded software — the intersection where rigorous math meets hardware
-          that has to work reliably at 100 km/h.
-        </p>
-        <p>
-          I learn by building: every concept I study goes into a working prototype,
-          whether that's a Kalman filter running on an STM32 or an MPC controller
-          tuned in simulation.
-        </p>
-      </div>
-      <div class="about-specs">
-        <div class="spec-row">
-          <span class="spec-key">Status</span>
-          <span class="spec-val">M.Sc. Mechatronics, ~3 semesters remaining</span>
+      <div class="readme-body">
+        <div class="rm-h1">About</div>
+        <div class="badges">
+          <span class="badge green">Open to Werkstudent</span>
+          <span class="badge blue">Rosenheim / Munich</span>
+          <span class="badge gray">EN C1</span>
+          <span class="badge gray">DE A2</span>
         </div>
-        <div class="spec-row">
-          <span class="spec-key">Location</span>
-          <span class="spec-val">Munich, Germany</span>
-        </div>
-        <div class="spec-row">
-          <span class="spec-key">Domain</span>
-          <span class="spec-val">Automotive Controls &amp; ADAS</span>
-        </div>
-        <div class="spec-row">
-          <span class="spec-key">Background</span>
-          <span class="spec-val">Mech. Eng. + Embedded Systems Industry</span>
-        </div>
-        <div class="spec-row">
-          <span class="spec-key">Languages</span>
-          <span class="spec-val">C · MATLAB · Python</span>
-        </div>
-        <div class="spec-row">
-          <span class="spec-key">Looking for</span>
-          <span class="spec-val">Werkstudent · Master's Thesis position</span>
-        </div>
+        <p class="rm-p">I'm a Master's student in Engineering Sciences (Mechatronics) at TH Rosenhiem with a background in Mechanical Engineering and hands-on industry experience in ECU application software development for automotive EV control systems.</p>
+        <p class="rm-p">Now at master's level I'm going deeper: MPC, robust estimation, acados-based solvers, hardware implmentation. The goal is to work at the point where advanced control algorithms meet production embedded constraints.</p>
+        <p class="rm-p">I learn by building: every concept I study goes into a working prototype, whether that's a Kalman filter running on an STM32 or an MPC controller tuned in simulation.</p>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-label">02 / Skills</div>
-    <h2>Technical <em>capabilities</em></h2>
-    <div class="skills-grid fade-up">
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 01</div>
-        <h3>Control Systems</h3>
-        <div class="skill-tags">
-          <span class="tag">Model Predictive Control</span>
-          <span class="tag">LQR / LQG</span>
-          <span class="tag">State-Space</span>
-          <span class="tag">Kalman Filtering (EKF)</span>
-          <span class="tag">System Identification</span>
-          <span class="tag">PID</span>
-          <span class="tag">Robust Control</span>
-        </div>
+  <div class="section fade" id="skills">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">skills.md</div>
       </div>
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 02</div>
-        <h3>Embedded Systems</h3>
-        <div class="skill-tags">
-          <span class="tag">STM32 / ARM Cortex-M</span>
-          <span class="tag">FreeRTOS</span>
-          <span class="tag">C / C++</span>
-          <span class="tag">CAN / J1939</span>
-          <span class="tag">AUTOSAR</span>
-          <span class="tag">UDS</span>
-          <span class="tag">Hardware Registers</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 03</div>
-        <h3>Modelling &amp; Simulation</h3>
-        <div class="skill-tags">
-          <span class="tag">MATLAB / Simulink</span>
-          <span class="tag">acados</span>
-          <span class="tag">CasADi</span>
-          <span class="tag">Model-Based Development</span>
-          <span class="tag">Equivalent Circuit Models</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 04</div>
-        <h3>Vehicle &amp; ADAS</h3>
-        <div class="skill-tags">
-          <span class="tag">Vehicle Dynamics</span>
-          <span class="tag">Lateral Control</span>
-          <span class="tag">Path Planning</span>
-          <span class="tag">E/E Architecture</span>
-          <span class="tag">EV Powertrain</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 05</div>
-        <h3>Software &amp; Tools</h3>
-        <div class="skill-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Git</span>
-          <span class="tag">Vector PREEvision</span>
-          <span class="tag">NumPy / SciPy</span>
-          <span class="tag">FreeRTOS</span>
-          <span class="tag">Linux</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-label">Domain 06</div>
-        <h3>Signal Processing</h3>
-        <div class="skill-tags">
-          <span class="tag">DSP</span>
-          <span class="tag">State Estimation</span>
-          <span class="tag">Sensor Fusion</span>
-          <span class="tag">Linear System ID</span>
-          <span class="tag">Trajectory Planning</span>
-        </div>
+      <div class="readme-body">
+        <div class="rm-h1">Technical skills</div>
+        <table class="rm-table">
+          <thead><tr><th>Domain</th><th>Technologies &amp; tools</th></tr></thead>
+          <tbody>
+            <tr><td>Control Systems</td><td><code>MPC</code> <code>EKF/UKF</code> <code>LQR/LQG</code> <code>State-space</code> <code>System ID</code> <code>PID</code> <code>Robust control</code></td></tr>
+            <tr><td>Embedded Systems</td><td><code>STM32/ARM Cortex-M</code> <code>RTOS</code> <code>C</code> <code>CAN/J1939</code> <code>Bare-metal</code> <code>Peripherals</code>
+            <tr><td>Vehicle Dynamics</td><td><code>Bicycle model</code> <code>Lateral/Longitudinal dynamics</code> <code>Tire modelling</code> <code>Motion Planning</code> <code>Trajectory Tracking</code></td></tr>
+            <tr><td>Electric Powertrain</td><td><code>ECM battery models</code> <code>BMS</code> <code>Motor Control (FOC)</code></td></tr>
+            <tr><td>Software &amp; Tools</td><td><code>MATLAB/Simulink</code> <code>C</code> <code>C++</code> <code>Python</code> <code>FreeRTOS</code> <code>Git </code><code>Linux</code></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-label">03 / Projects</div>
-    <h2>What I've <em>built</em></h2>
-    <div class="projects-list fade-up">
+  <div class="section fade" id="projects">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">projects.md</div>
+      </div>
+      <div class="readme-body">
+        <div class="rm-h1">Projects</div>
+        <p class="rm-p">Each project follows: what problem it solves, how I approached it, and what the result was.</p>
 
-      <a class="project-item" href="https://github.com/your-username/soc-estimator" target="_blank">
-        <div class="project-num">P — 01</div>
-        <div class="project-body">
-          <h3>Battery SOC Estimator on STM32</h3>
-          <p>
-            Equivalent Circuit Model (ECM) built in Simulink, paired with an Extended Kalman Filter
-            implemented first in MATLAB then hand-ported to C. Runs on an STM32F4 Discovery board
-            under FreeRTOS with real-time task scheduling and UART telemetry.
-          </p>
-          <div class="project-tech">
-            <span>C</span><span>STM32F4</span><span>FreeRTOS</span><span>MATLAB/Simulink</span><span>EKF</span><span>ECM</span>
-          </div>
+        <div class="rm-h2">P-01 &nbsp;·&nbsp; Battery SOC Estimator on STM32</div>
+        <div class="badges"><span class="badge gray">C</span><span class="badge gray">STM32F4</span><span class="badge gray">FreeRTOS</span><span class="badge gray">MATLAB/Simulink</span><span class="badge gray">EKF</span><span class="badge gray">ECM</span></div>
+        <div class="pwr">
+          <div class="pwr-block"><div class="pwr-label p">Problem</div><div class="pwr-text">BMS needs accurate SOC under noisy measurements — pure Coulomb counting drifts badly over time and temperature.</div></div>
+          <div class="pwr-block"><div class="pwr-label a">Approach</div><div class="pwr-text">ECM built in Simulink, EKF validated in MATLAB, then <b>hand-ported to C</b> with FreeRTOS task scheduling on STM32F4.</div></div>
+          <div class="pwr-block"><div class="pwr-label r">Result</div><div class="pwr-text">Real-time SOC estimation at [X] Hz, &lt;[X]% error vs ground truth over a simulated drive cycle.</div></div>
         </div>
-        <div class="project-arrow">↗</div>
-      </a>
+        <div class="proj-link-row"><a class="proj-link" href="https://github.com/your-username/soc-estimator" target="_blank">View repo ↗</a></div>
 
-      <a class="project-item" href="https://github.com/your-username/lateral-mpc" target="_blank">
-        <div class="project-num">P — 02</div>
-        <div class="project-body">
-          <h3>Lateral MPC for Autonomous Vehicle Steering</h3>
-          <p>
-            Model Predictive Controller for lateral vehicle guidance using a bicycle model, implemented
-            with acados and CasADi. Explores constraint handling, state-space linearisation,
-            and real-time feasibility for ADAS steering applications.
-          </p>
-          <div class="project-tech">
-            <span>Python</span><span>acados</span><span>CasADi</span><span>MPC</span><span>Vehicle Dynamics</span>
-          </div>
+        <div class="rm-h2">P-02 &nbsp;·&nbsp; Lateral MPC for Autonomous Steering</div>
+        <div class="badges"><span class="badge gray">Python</span><span class="badge gray">acados</span><span class="badge gray">CasADi</span><span class="badge gray">MPC</span><span class="badge gray">Vehicle dynamics</span></div>
+        <div class="pwr">
+          <div class="pwr-block"><div class="pwr-label p">Problem</div><div class="pwr-text">Lateral control must respect actuator limits simultaneously — classical PID cannot handle constraints explicitly.</div></div>
+          <div class="pwr-block"><div class="pwr-label a">Approach</div><div class="pwr-text">Linearised bicycle model, <b>MPC in acados/CasADi</b>, constraints on lateral error and steering rate.</div></div>
+          <div class="pwr-block"><div class="pwr-label r">Result</div><div class="pwr-text">Solver runs in &lt;[X] ms per step, constraint satisfaction verified across lane-change and curve scenarios.</div></div>
         </div>
-        <div class="project-arrow">↗</div>
-      </a>
+        <div class="proj-link-row"><a class="proj-link" href="https://github.com/your-username/lateral-mpc" target="_blank">View repo ↗</a></div>
 
-      <a class="project-item" href="https://github.com/your-username/sensor-fusion" target="_blank">
-        <div class="project-num">P — 03</div>
-        <div class="project-body">
-          <h3>Modular EKF Sensor Fusion (2D Navigation)</h3>
-          <p>
-            Plug-and-play Extended Kalman Filter framework for 2D robot navigation in Python simulation.
-            Modular sensor architecture inspired by QuNav, with configurable measurement models
-            for IMU, GPS, and encoder fusion.
-          </p>
-          <div class="project-tech">
-            <span>Python</span><span>EKF</span><span>Sensor Fusion</span><span>NumPy</span><span>Robotics</span>
-          </div>
+        <div class="rm-h2">P-03 &nbsp;·&nbsp; Modular EKF Sensor Fusion</div>
+        <div class="badges"><span class="badge gray">Python</span><span class="badge gray">EKF</span><span class="badge gray">NumPy</span><span class="badge gray">IMU/GPS/Encoder</span></div>
+        <div class="pwr">
+          <div class="pwr-block"><div class="pwr-label p">Problem</div><div class="pwr-text">Sensor fusion implementations are tightly coupled to a fixed sensor set — swapping sensors means rewriting the estimator.</div></div>
+          <div class="pwr-block"><div class="pwr-label a">Approach</div><div class="pwr-text"><b>Plug-and-play EKF architecture</b> — each sensor registers its own measurement model independently.</div></div>
+          <div class="pwr-block"><div class="pwr-label r">Result</div><div class="pwr-text">Adding a new sensor requires only a measurement Jacobian — core filter logic unchanged. Validated in 2D sim.</div></div>
         </div>
-        <div class="project-arrow">↗</div>
-      </a>
+        <div class="proj-link-row"><a class="proj-link" href="https://github.com/your-username/sensor-fusion" target="_blank">View repo ↗</a></div>
 
-      <a class="project-item" href="https://github.com/your-username/cstr-mpc" target="_blank">
-        <div class="project-num">P — 04</div>
-        <div class="project-body">
-          <h3>MPC for Nonlinear CSTR Process Control</h3>
-          <p>
-            Model Predictive Control applied to a Continuous Stirred-Tank Reactor (CSTR) nonlinear
-            system. Covers nonlinear system identification, linearisation around operating points,
-            and constraint-aware optimal control.
-          </p>
-          <div class="project-tech">
-            <span>MATLAB</span><span>MPC</span><span>Nonlinear Systems</span><span>Process Control</span>
-          </div>
+        <div class="rm-h2">P-04 &nbsp;·&nbsp; MPC on Nonlinear CSTR</div>
+        <div class="badges"><span class="badge gray">MATLAB</span><span class="badge gray">MPC</span><span class="badge gray">Nonlinear systems</span></div>
+        <div class="pwr">
+          <div class="pwr-block"><div class="pwr-label p">Problem</div><div class="pwr-text">CSTR has strong nonlinearity — a single linearisation point fails when the system moves far from it.</div></div>
+          <div class="pwr-block"><div class="pwr-label a">Approach</div><div class="pwr-text">Nonlinear system ID, successive linearisation across operating range, <b>MPC with terminal cost</b> for recursive feasibility.</div></div>
+          <div class="pwr-block"><div class="pwr-label r">Result</div><div class="pwr-text">Stable tracking across setpoint changes where single-point linear MPC diverged.</div></div>
         </div>
-        <div class="project-arrow">↗</div>
-      </a>
+        <div class="proj-link-row"><a class="proj-link" href="https://github.com/your-username/cstr-mpc" target="_blank">View repo ↗</a></div>
 
+      </div>
     </div>
-  </section>
+  </div>
 
   <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-label">04 / Experience</div>
-    <h2>Where I've <em>worked</em></h2>
-    <div class="exp-list fade-up">
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <strong>2022 — 2023</strong>
-          Pune, India<br>Full-time
-        </div>
-        <div class="exp-content">
-          <h3>Embedded Systems Engineer</h3>
-          <div class="exp-org">Devise Electronics Pvt. Ltd.</div>
-          <p>Embedded systems and model-based development for automotive electric vehicle control systems.</p>
-          <ul>
-            <li>Developed and validated EV powertrain control software using MATLAB/Simulink MBD workflows</li>
-            <li>Implemented CAN communication protocols (J1939) for inter-ECU data exchange</li>
-            <li>Worked with AUTOSAR architecture and UDS diagnostic protocols</li>
-            <li>Hardware-in-the-loop testing and calibration of motor controller parameters</li>
-          </ul>
-        </div>
+  <div class="section fade" id="experience">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">experience.md</div>
       </div>
+      <div class="readme-body">
+        <div class="rm-h1">Experience</div>
 
+        <div class="rm-h2">Devise Electronics Pvt. Ltd. &nbsp;·&nbsp; Pune, India &nbsp;·&nbsp; 20XX–20XX</div>
+        <div class="badges">
+          <span class="badge orange">Intern → Engineer → Senior Engineer</span>
+          <span class="badge gray">ECU ASW</span>
+          <span class="badge gray">EV Powertrain</span>
+        </div>
+        <p class="rm-p">Developed embedded application software for EV powertrain ECUs across the full V-model cycle, from requirements through integration testing. Progressed from intern to senior engineer with ownership of key subsystems.</p>
+        <table class="rm-table">
+          <thead><tr><th>Area</th><th>What I did</th></tr></thead>
+          <tbody>
+            <tr><td>MBD / Simulink</td><td>Developed and validated EV powertrain control software using model-based development, auto-generating production C code</td></tr>
+            <tr><td>CAN / J1939</td><td>Implemented and tested CAN communication stacks for torque request, BMS state, and thermal management signals between ECUs</td></tr>
+            <tr><td>AUTOSAR</td><td>Integrated SW components into AUTOSAR architecture; worked with BSW configuration and RTE interfaces</td></tr>
+            <tr><td>UDS diagnostics</td><td>Wrote and executed UDS diagnostic routines for fault injection, DTC management, and EOL calibration</td></tr>
+            <tr><td>HiL testing</td><td>Ran hardware-in-the-loop tests and calibrated motor controller lookup tables against dyno measurements</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </section>
+  </div>
 
   <!-- EDUCATION -->
-  <section id="education">
-    <div class="section-label">05 / Education</div>
-    <h2>Academic <em>background</em></h2>
-    <div class="edu-grid fade-up">
-      <div class="edu-card">
-        <div class="degree">M.Sc. Mechatronics Engineering</div>
-        <div class="school">University — Germany</div>
-        <div class="years">2023 — Present (ongoing)</div>
-        <p>Focusing on control systems, real-time embedded software, and autonomous systems. ~3 semesters remaining including thesis.</p>
-        <div class="edu-courses">
-          <span class="course-tag">Real Time Systems</span>
-          <span class="course-tag">DSP</span>
-          <span class="course-tag">Linear System ID</span>
-          <span class="course-tag">Trajectory Planning</span>
-          <span class="course-tag">Control Theory</span>
-        </div>
+  <div class="section fade" id="education">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">education.md</div>
       </div>
-      <div class="edu-card">
-        <div class="degree">B.E. Mechanical Engineering</div>
-        <div class="school">Your Undergrad University</div>
-        <div class="years">2018 — 2022</div>
-        <p>Strong foundation in mechanics, thermodynamics, and engineering mathematics. Final year project in [your project topic].</p>
-        <div class="edu-courses">
-          <span class="course-tag">Engineering Mathematics</span>
-          <span class="course-tag">Dynamics</span>
-          <span class="course-tag">Thermodynamics</span>
-          <span class="course-tag">CAD/CAM</span>
-        </div>
+      <div class="readme-body">
+        <div class="rm-h1">Education</div>
+        <table class="rm-table">
+          <thead><tr><th>Degree</th><th>Institution</th><th>Period</th><th>Key coursework</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>M.Eng. Engineering Sciences<br><span style="font-weight:400;color:var(--ink-soft);font-size:.75rem;">Specialisation: Mechatronics</span></td>
+              <td>Your University<br><span style="font-weight:400;color:var(--ink-soft);font-size:.75rem;">Germany</span></td>
+              <td>2025 –<br>present</td>
+              <td><code>MPC</code> <code>Real Time Systems</code> <code>DSP</code> <code>Linear System ID</code> <code>Trajectory Planning</code></td>
+            </tr>
+            <tr>
+              <td>B.Tech. Mechanical Engineering</td>
+              <td>NIT Rourkela<br><span style="font-weight:400;color:var(--ink-soft);font-size:.75rem;">Top-15 India · equiv. German TU</span></td>
+              <td>2017 –<br>2021</td>
+              <td><code>Dynamics</code> <code>Thermodynamics</code> <code>Engineering Math</code> <code>CAD/CAM</code> <code>Control Intro</code></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div class="section-label" style="justify-content:center">06 / Contact</div>
-      <h2>Let's <em>work together</em></h2>
-      <p>
-        I'm actively looking for Werkstudent positions and Master's thesis opportunities
-        in automotive controls, ADAS, and embedded systems — particularly in the Munich area.
-        If you're working on something interesting, reach out.
-      </p>
-      <div class="contact-links">
-        <a href="mailto:your.email@example.com" class="btn filled">Email Me</a>
-        <a href="https://linkedin.com/in/your-profile" target="_blank" class="btn">LinkedIn ↗</a>
-        <a href="https://github.com/your-username" target="_blank" class="btn">GitHub ↗</a>
-        <a href="/resume.pdf" class="btn">CV / Resume ↗</a>
+  <div class="section fade" id="contact">
+    <div class="readme-chrome">
+      <div class="readme-bar">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="fname">contact.md</div>
+      </div>
+      <div class="readme-body">
+        <div class="rm-h1">Let's connect</div>
+        <p class="rm-p">Looking for Werkstudent positions in automotive controls, robotics, and embedded systems in the Rosenheim / Munich area. If you're working on something interesting, reach out</p>
+        <div class="contact-grid">
+          <a href="mailto:your.email@example.com" class="contact-btn primary">email ↗</a>
+          <a href="https://linkedin.com/in/your-profile" target="_blank" class="contact-btn">linkedin ↗</a>
+          <a href="https://github.com/your-username" target="_blank" class="contact-btn">github ↗</a>
+          <a href="resume.pdf" download class="contact-btn dl">↓ lebenslauf.pdf</a>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <span>© 2025 Zaid Mohiuddin</span>
-    <span>Mechatronics Engineer · Munich</span>
-    <span>Built with HTML · Deployed on GitHub Pages</span>
-  </footer>
+</div><!-- /page -->
 
-  <script>
-    // Fade-up on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+<footer>
+  <span><b>Zaid Sarguroh</b> &nbsp;·&nbsp; Control Systems &amp; Embedded Engineer</span>
+  <span>Rosenheim, Germany &nbsp;·&nbsp; 2025</span>
+  <span>Deployed on GitHub Pages</span>
+</footer>
 
-    // Photo upload
-    const photoInput   = document.getElementById('photo-input');
-    const heroImg      = document.getElementById('hero-img');
-    const frame        = document.getElementById('photo-frame');
-    const placeholder  = document.getElementById('photo-placeholder');
-    const photoLabel   = document.getElementById('photo-label');
-
-    function loadPhoto(file) {
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      heroImg.src = url;
-      frame.style.display = 'block';
-      placeholder.style.display = 'none';
-      photoLabel.textContent = file.name;
-    }
-
-    photoInput.addEventListener('change', (e) => loadPhoto(e.target.files[0]));
-    frame.addEventListener('click', () => photoInput.click());
-  </script>
-
+<script>
+  const io = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.05 }
+  );
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
 </body>
 </html>
